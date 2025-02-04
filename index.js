@@ -7,8 +7,9 @@ const router = require("./routes");
 
 const app = express();
 app.use(cors({
-    origin: ["https://spectacular-kleicha-d2752f.netlify.app , http://localhost:3000"], // Allow only your frontend origin
-    credentials: true, // Allow credentials (cookies, authorization headers)
+    origin: ["https://spectacular-kleicha-d2752f.netlify.app", "http://localhost:3000"], // Allow both frontend URLs
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
+    credentials: true // Allow cookies and authorization headers
 }));
 app.use(express.json());
 app.use(cookieParser());
