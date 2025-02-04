@@ -6,7 +6,10 @@ const connectDB = require("./config/db");
 const router = require("./routes");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ["https://spectacular-kleicha-d2752f.netlify.app , http://localhost:3000"], // Allow only your frontend origin
+    credentials: true, // Allow credentials (cookies, authorization headers)
+}));
 app.use(express.json());
 app.use(cookieParser());
 
