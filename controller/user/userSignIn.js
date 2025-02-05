@@ -37,6 +37,9 @@ async function userSignInController(req,res){
 
         res.cookie("token",token,tokenOption).status(200).json({
             message : "Login successfully",
+            httpOnly : true,
+            secure : true,
+            sameSite : "none",
             data : token,
             success : true,
             error : false

@@ -14,6 +14,16 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// Set cookies with SameSite and Secure attributes
+app.use((req, res, next) => {
+    res.cookie("token", "your-token-value", {
+      httpOnly: true,
+      secure: true, // Ensure this is true in production (HTTPS only)
+      sameSite: "none", // Required for cross-origin cookies
+    });
+    next();
+  });
+
 app.use("/api", router);
 
 const PORT = process.env.PORT;
