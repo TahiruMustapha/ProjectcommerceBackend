@@ -7,22 +7,13 @@ const router = require("./routes");
 
 const app = express();
 app.use(cors({
-    origin: ["https://spectacular-kleicha-d2752f.netlify.app", "http://localhost:3000"], // Allow both frontend URLs
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
-    credentials: true // Allow cookies and authorization headers
+    origin: ["https://spectacular-kleicha-d2752f.netlify.app", "http://localhost:3000"], // Allow frontend URLs
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true  // Allow sending cookies
 }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Set cookies with SameSite and Secure attributes
-app.use((req, res, next) => {
-    res.cookie("token", "your-token-value", {
-      httpOnly: true,
-      secure: true, // Ensure this is true in production (HTTPS only)
-      sameSite: "none", // Required for cross-origin cookies
-    });
-    next();
-  });
 
 app.use("/api", router);
 
