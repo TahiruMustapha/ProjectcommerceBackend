@@ -1,64 +1,54 @@
-const bcrypt = require('bcryptjs')
-const userModel = require('../../models/userModel')
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcryptjs");
+const userModel = require("../../models/userModel");
+const jwt = require("jsonwebtoken");
 
-async function userSignInController(req,res){
-    try{
-        const { email , password} = req.body
+async function userSignInController(req, res) {
+    try {
+        const { email, password } = req.body;
 
-        if(!email){
-            throw new Error("Please provide email")
-        }
-        if(!password){
-             throw new Error("Please provide password")
+        if (!email || !password) {
+            throw new Error("Please provide email and password");
         }
 
-        const user = await userModel.findOne({email})
+        const user = await userModel.findOne({ email });
 
-       if(!user){
-            throw new Error("User not found")
-       }
-
-       const checkPassword = await bcrypt.compare(password,user.password)
-
-
-       if(checkPassword){
-        const tokenData = {
-            _id : user._id,
-            email : user.email,
-        }
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: 60 * 60 * 8 });
-
-        const tokenOption = {
-            httpOnly : true,
-            secure : true
+        if (!user) {
+            throw new Error("User not found");
         }
 
-        res.cookie("token",token,tokenOption).status(200).json({
-            message : "Login successfully",
-            data : token,
-            success : true,
-            error : false
-        })
+        const checkPassword = await bcrypt.compare(password, user.password);
 
-       }else{
-         throw new Error("Please check Password")
-       }
+        if (!checkPassword) {
+            throw new Error("Invalid password");
+        }
 
+        // Remove password before sending user details
+        const { password: _, ...userData } = user.toObject();
 
+        const token = jwt.sign(
+            { _id: user._id, email: user.email },
+            process.env.TOKEN_SECRET_KEY,
+            { expiresIn: "8h" }
+        );
 
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+        }).status(200).json({
+            message: "Login successfully",
+            token,  // ✅ Send token
+            user: userData,  // ✅ Send all user details except password
+            success: true,
+        });
 
-
-
-
-    }catch(err){
-        res.json({
-            message : err.message || err  ,
-            error : true,
-            success : false,
-        })
+    } catch (err) {
+        res.status(400).json({
+            message: err.message || "An error occurred",
+            error: true,
+            success: false,
+        });
     }
-
 }
 
-module.exports = userSignInController
+module.exports = userSignInController;
