@@ -33,12 +33,12 @@ async function userSignInController(req, res) {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: "None",
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: "Lax",
         }).status(200).json({
             message: "Login successfully",
-            token,  // ✅ Send token
-            user: userData,  // ✅ Send all user details except password
+            token,  // Send token
+            user: userData,  //  Send all user details except password
             success: true,
         });
 
