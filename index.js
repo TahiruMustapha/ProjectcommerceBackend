@@ -18,7 +18,7 @@ const app = express();
 //   })
 // );
 const allowedOrigins = [
- `${process.env.FRONTEND_URL}`, // Development URL
+//  `${process.env.FRONTEND_URL}`, // Development URL
   `${process.env.FRONTEND_URL_PRODUCTION}`, // Production URL
 ];
 
