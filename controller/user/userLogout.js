@@ -1,9 +1,10 @@
 async function userLogout(req, res) {
   try {
-    res.clearCookie("token", {
+    res.clearCookie("token", "",{
       path: "/",
-      sameSite: "None",
-      secure: process.env.NODE_ENV === "development" ? false : true,
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      expires: new Date(0) // Set the expiration date to a past time (epoch)
     });
 
     res.json({
