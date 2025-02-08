@@ -9,9 +9,9 @@ const app = express();
 app.use(
   cors({
     origin: `${
-      process.env.NODE_ENV === "production"
-        ? process.env.FRONTEND_URL_PRODUCTION
-        : `${process.env.FRONTEND_URL}`
+      process.env.NODE_ENV === "development"
+        ? process.env.FRONTEND_URL
+        : `${process.env.FRONTEND_URL_PRODUCTION}`
     }`, // Allow frontend URLs
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // Allow sending cookies
