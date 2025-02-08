@@ -39,7 +39,7 @@ async function userSignInController(req, res) {
         domain:
           process.env.NODE_ENV === "production"
             ? process.env.PRODUCTION_DOMAIN
-            : "localhost",
+            : "http://localhost:5000",
         path: "/",
       })
       .status(200)
