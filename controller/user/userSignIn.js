@@ -38,7 +38,7 @@ async function userSignInController(req, res) {
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         domain:
           process.env.NODE_ENV === "production"
-            ? process.env.FRONTEND_URL_PRODUCTION
+            ? "spectacular-kleicha-d2752f.netlify.app"
             : "http://localhost:3000",
         path: "/",
       })
