@@ -31,17 +31,14 @@ async function userSignInController(req, res) {
       { expiresIn: "8h" }
     );
 
-    res
-      .cookie("token", token, {
+    res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Only secure in production
-        // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        sameSite: "lax",
-
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         domain:
           process.env.NODE_ENV === "production"
-            ? "spectacular-kleicha-d2752f.netlify.app"
-            : "http://localhost:3000",
+            ? process.env.PRODUCTION_DOMAIN // Use the backend domain
+            : process.env.DEVELOPMENT_DOMAIN, // Use localhost in development
         path: "/",
       })
       .status(200)
