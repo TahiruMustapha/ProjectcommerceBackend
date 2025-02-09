@@ -33,6 +33,8 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // Allow sending cookies
+    allowedHeaders: ["Content-Type", "Authorization"],  // ✅ Add this
+    exposedHeaders: ["Set-Cookie"],  // ✅ Some browsers need this
   })
 );
 

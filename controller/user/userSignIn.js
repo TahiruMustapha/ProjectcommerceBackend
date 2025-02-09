@@ -35,10 +35,10 @@ async function userSignInController(req, res) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Only secure in production
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        domain:
-          process.env.NODE_ENV === "production"
-            ? "projectcommercebackend.onrender.com"// Use the backend domain
-            : "localhost", // Use localhost in development
+        // domain:
+        //   process.env.NODE_ENV === "production"
+        //     ? "projectcommercebackend.onrender.com"// Use the backend domain
+        //     : "localhost", // Use localhost in development
         path: "/",
       })
       .status(200)
