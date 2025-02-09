@@ -38,8 +38,8 @@ async function userSignInController(req, res) {
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         domain:
           process.env.NODE_ENV === "production"
-            ? process.env.PRODUCTION_DOMAIN
-            : "http://localhost:5000",
+            ? process.env.FRONTEND_URL_PRODUCTION
+            : "http://localhost:3000",
         path: "/",
       })
       .status(200)
