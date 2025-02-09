@@ -31,8 +31,8 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // ✅ Allow sending cookies
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Allow sending cookies
   })
 );
 

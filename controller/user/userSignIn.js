@@ -35,7 +35,9 @@ async function userSignInController(req, res) {
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Only secure in production
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        sameSite: "none",
+
         domain:
           process.env.NODE_ENV === "production"
             ? "spectacular-kleicha-d2752f.netlify.app"
