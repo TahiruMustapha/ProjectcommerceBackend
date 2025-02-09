@@ -37,8 +37,8 @@ async function userSignInController(req, res) {
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         domain:
           process.env.NODE_ENV === "production"
-            ? process.env.PRODUCTION_DOMAIN // Use the backend domain
-            : process.env.DEVELOPMENT_DOMAIN, // Use localhost in development
+            ? "projectcommercebackend.onrender.com"// Use the backend domain
+            : "localhost", // Use localhost in development
         path: "/",
       })
       .status(200)
