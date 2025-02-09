@@ -36,7 +36,7 @@ async function userSignInController(req, res) {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Only secure in production
         // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        sameSite: "none",
+        sameSite: "lax",
 
         domain:
           process.env.NODE_ENV === "production"
