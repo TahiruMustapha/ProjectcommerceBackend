@@ -31,14 +31,16 @@ async function userSignInController(req, res) {
       { expiresIn: "8h" }
     );
 
-    const isProduction = process.env.NODE_ENV === "production";
-
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: isProduction, // Only secure in production
-      sameSite: isProduction ? "none" : "lax", // Use "none" in production, "lax" in development
-      path: "/", // Ensure the cookie is accessible across the entire domain
-    })
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Only secure in production
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        domain:
+        process.env.NODE_ENV === "production"
+          ? ".spectacular-kleicha-d2752f.netlify.app" // Frontend domain (with leading dot for subdomains)
+          : undefined, // No domain in development // Use localhost in development
+        path: "/",
+      })
       .status(200)
       .json({
         message: "Login successfully",

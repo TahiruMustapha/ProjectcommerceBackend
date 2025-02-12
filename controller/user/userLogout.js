@@ -1,12 +1,15 @@
 async function userLogout(req, res) {
-  const isProduction = process.env.NODE_ENV === "production";
-
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: isProduction, // Only secure in production
-      sameSite: isProduction ? "none" : "lax", // Use "none" in production, "lax" in development
-      path: "/", // Ensure the cookie is accessible across the entire domain
+      domain:
+        process.env.NODE_ENV === "production"
+          ? ".spectacular-kleicha-d2752f.netlify.app" // Frontend domain (with leading dot for subdomains)
+          : undefined,
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      // expires: new Date(0) // Set the expiration date to a past time (epoch)
     });
 
     res.json({
