@@ -1,5 +1,6 @@
 async function userLogout(req, res) {
   try {
+    console.log(req.cookies);
     const isProduction = process.env.NODE_ENV === "production";
     const domain = isProduction ? ".spectacular-kleicha-d2752f.netlify.app" : undefined; // Dynamic domain
     const sameSite = isProduction ? "None" : "Lax"; // Conditional sameSite
