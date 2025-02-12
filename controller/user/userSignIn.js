@@ -31,16 +31,14 @@ async function userSignInController(req, res) {
       { expiresIn: "8h" }
     );
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Only secure in production
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        // domain:
-        //   process.env.NODE_ENV === "production"
-        //     ? `${process.env.FRONTEND_URL_PRODUCTION}`// Use the backend domain
-        //     : "localhost", // Use localhost in development
-        path: "/",
-      })
+      httpOnly: true,
+      secure: isProduction, // Only secure in production
+      sameSite: isProduction ? "none" : "lax", // Use "none" in production, "lax" in development
+      path: "/", // Ensure the cookie is accessible across the entire domain
+    })
       .status(200)
       .json({
         message: "Login successfully",

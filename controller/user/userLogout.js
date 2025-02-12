@@ -1,13 +1,12 @@
 async function userLogout(req, res) {
+  const isProduction = process.env.NODE_ENV === "production";
+
   try {
-    res.clearCookie("token", "",{
-    
+    res.clearCookie("token", {
       httpOnly: true,
-      // domain: process.env.NODE_ENV === 'production'? process.env.FRONTEND_URL_PRODUCTION: undefined,
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      expires: new Date(0) // Set the expiration date to a past time (epoch)
+      secure: isProduction, // Only secure in production
+      sameSite: isProduction ? "none" : "lax", // Use "none" in production, "lax" in development
+      path: "/", // Ensure the cookie is accessible across the entire domain
     });
 
     res.json({
