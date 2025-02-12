@@ -1,15 +1,16 @@
 async function userLogout(req, res) {
   try {
+    const isProduction = process.env.NODE_ENV === "production";
+    const domain = isProduction ? ".spectacular-kleicha-d2752f.netlify.app" : undefined; // Dynamic domain
+    const sameSite = isProduction ? "None" : "Lax"; // Conditional sameSite
+    const secure = isProduction; // Secure only in production
+
     res.clearCookie("token", {
       httpOnly: true,
-      // domain:
-      //   process.env.NODE_ENV === "production"
-      //     ? ".spectacular-kleicha-d2752f.netlify.app" // Frontend domain (with leading dot for subdomains)
-      //     : undefined,
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      secure: process.env.NODE_ENV === "production",
+      domain: domain, // Use the dynamically determined domain
+      sameSite: sameSite,
+      secure: secure,
       path: "/",
-      // expires: new Date(0) // Set the expiration date to a past time (epoch)
     });
 
     res.json({

@@ -31,21 +31,20 @@ async function userSignInController(req, res) {
       { expiresIn: "8h" }
     );
 
+    const isProduction = process.env.NODE_ENV === "production";
+    const domain = isProduction ? ".spectacular-kleicha-d2752f.netlify.app" : undefined; // Correct domain handling
+
     res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Only secure in production
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        // domain:
-        // process.env.NODE_ENV === "production"
-        //   ? ".spectacular-kleicha-d2752f.netlify.app" // Frontend domain (with leading dot for subdomains)
-        //   : undefined, // No domain in development // Use localhost in development
+        secure: isProduction, // Only secure in production
+        sameSite: isProduction ? "none" : "lax",
+        domain: domain,  // Use the dynamically determined domain
         path: "/",
       })
       .status(200)
       .json({
         message: "Login successfully",
-        // token,  // Send token
-        user: userData, //  Send all user details except password
+        user: userData,
         success: true,
       });
   } catch (err) {
