@@ -22,7 +22,10 @@ const updateAddToCartProduct = require("../controller/user/updateAddToCartProduc
 const deleteAddToCartProduct = require("../controller/user/deleteAddToCartProduct");
 const searchProduct = require("../controller/product/searchProduct");
 const filterProductController = require("../controller/product/filterProduct");
-
+const paystackIntegrationController = require("../controller/user/paystackIntegrationController");
+const paystackVarifyController = require("../controller/user/paystackVarifyController");
+const clearUserCart = require("../controller/user/clearUserCart");
+const checkAuth = require("../controller/user/checkAuth");
 router.post("/signup", userSignUpController);
 router.post("/signin", userSignInController);
 router.get("/user-details", authToken, userDetailsController);
@@ -48,5 +51,8 @@ router.get("/countAddToCartProduct", authToken, countAddToCartProduct);
 router.get("/view-card-product", authToken, addToCartViewProduct);
 router.post("/update-cart-product", authToken, updateAddToCartProduct);
 router.post("/delete-cart-product", authToken, deleteAddToCartProduct);
-
+router.delete("/delete-user-cart",authToken, clearUserCart);
+router.post("/paystack/callback",paystackIntegrationController);
+router.post("/paystack/verify",paystackVarifyController);
+router.get("/check-auth",checkAuth)
 module.exports = router;
