@@ -37,7 +37,7 @@ async function userSignInController(req, res) {
     res.cookie("token", token, {
         httpOnly: true,
         secure: isProduction, // Only secure in production
-        sameSite: isProduction ? "Lax" : "Lax",
+        sameSite: isProduction ? "None" : "Lax",
         domain: domain,  // Use the dynamically determined domain
         path: "/",
       })
