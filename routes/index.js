@@ -25,11 +25,14 @@ const filterProductController = require("../controller/product/filterProduct");
 const clearUserCart = require("../controller/user/clearUserCart");
 const checkAuth = require("../controller/user/checkAuth");
 const adminDeleteProductCard = require("../controller/product/adminDeleteProductCard");
+const sendMail = require("../controller/user/sendMial");
+const sendSMS = require("../controller/user/sendSms");
 router.post("/signup", userSignUpController);
 router.post("/signin", userSignInController);
 router.get("/user-details", authToken, userDetailsController);
 router.get("/userLogout", userLogout);
-
+router.post("/send-receipt", authToken, sendMail);
+router.post("/send-sms", authToken, sendSMS);
 //admin panel
 router.get("/all-user", authToken, allUsers);
 router.post("/update-user", authToken, updateUser);
